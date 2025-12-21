@@ -1,0 +1,28 @@
+artifact_path: file:///C:/Users/SHIVA/Downloads/SUBMISSION_AKHIR_SHIVA/MLProject/mlruns/346523741657368074/models/m-14addeaa48a1430c9fd4c8c81ffed4f8/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.14
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+is_signature_from_type_hint: false
+mlflow_version: 3.7.0
+model_id: m-14addeaa48a1430c9fd4c8c81ffed4f8
+model_size_bytes: 226307
+model_uuid: m-14addeaa48a1430c9fd4c8c81ffed4f8
+prompts: null
+run_id: 1a6050ac13b14206a272c1be8bb703c3
+signature:
+  inputs: '[{"type": "string", "name": "content", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "object", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-12-21 12:03:16.693621'

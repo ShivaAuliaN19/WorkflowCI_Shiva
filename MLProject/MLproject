@@ -1,0 +1,10 @@
+name: sentiment-tuning-project
+
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      csv_path: path
+    command: >
+      python modelling_tuning.py --csv_path {csv_path}
