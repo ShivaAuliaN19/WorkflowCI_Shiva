@@ -23,7 +23,7 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-print("📥 Load dataset...")
+print("Load dataset...")
 df = pd.read_csv(args.csv_path)
 
 X = df["content"]
@@ -53,7 +53,7 @@ grid_search = GridSearchCV(
     n_jobs=-1
 )
 
-print("🚀 RUN TUNING DIMULAI")
+print("RUN TUNING DIMULAI")
 
 with mlflow.start_run():
 
@@ -89,10 +89,10 @@ with mlflow.start_run():
         signature=signature
     )
 
-    print(f"✅ C terbaik       : {best_params['clf__C']}")
-    print(f"📊 Accuracy        : {acc:.4f}")
-    print(f"📊 Precision       : {prec:.4f}")
-    print(f"📊 Recall          : {rec:.4f}")
-    print(f"📊 F1-score        : {f1:.4f}")
+    print(f"C terbaik       : {best_params['clf__C']}")
+    print(f"Accuracy        : {acc:.4f}")
+    print(f"Precision       : {prec:.4f}")
+    print(f"Recall          : {rec:.4f}")
+    print(f"F1-score        : {f1:.4f}")
 
-print("🎉 PROGRAM TUNING SELESAI")
+print("PROGRAM TUNING SELESAI")
