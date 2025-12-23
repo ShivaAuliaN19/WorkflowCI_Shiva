@@ -1,4 +1,4 @@
-name: ML CI Pipeline (Docker + MLflow + Conda)
+name: ML CI Pipeline (MLflow Host)
 
 on:
   push:
@@ -10,17 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Build Docker image (no cache)
-        run: docker build --no-cache -t mlflow-conda-project MLProject
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
 
-      - name: Check MLflow version
-        run: docker run --rm mlflow-conda-project mlflow --version
-
-      - name: Run MLflow Project (Conda)
+      - name: Install dependencies
         run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/app \
-            -w /app \
-            mlflow-conda-project mlflow run /app/MLProject --backend local -P csv_path=/app/Hasil_Preprocessing_dan_Labelling.csv
+          python -m pip install --upgrade pip setuptools wheel
+          pip install mlflow==2.9.1
+          pip install -r MLProject/requirements.txt
+
+      - name: Run MLflow Project
+        run: |
+          mlflow run MLProject --backend local -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
