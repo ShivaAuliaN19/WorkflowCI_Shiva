@@ -27,8 +27,7 @@ jobs:
         auto-update-conda: true
         python-version: 3.11
         activate-environment: mlflow_env
-        environment-file: conda.yaml
-        update-environment: true
+        environment-file: MLProject/conda.yaml
 
     - name: Install MLflow
       run: |
@@ -36,4 +35,4 @@ jobs:
 
     - name: Run MLflow project
       run: |
-        mlflow run . -P csv_path=Hasil_Preprocessing_dan_Labelling.csv --no-conda
+        mlflow run MLProject -P csv_path=MLProject/Hasil_Preprocessing_dan_Labelling.csv --no-conda
