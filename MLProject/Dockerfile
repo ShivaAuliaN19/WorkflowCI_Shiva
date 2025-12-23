@@ -3,7 +3,7 @@ FROM python:3.10-slim
 WORKDIR /app
 COPY . /app
 
-# Upgrade pip dan MLflow
+# Upgrade pip dan MLflow supaya --no-conda dikenali
 RUN pip install --upgrade pip
 RUN pip install --upgrade mlflow
 
