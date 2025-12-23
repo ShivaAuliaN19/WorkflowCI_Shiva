@@ -1,0 +1,22 @@
+name: ML CI Pipeline (Docker + MLflow)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t mlflow-project .
+
+      - name: Run MLflow Project
+        run: |
+          docker run --rm mlflow-project \
+            run . -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
