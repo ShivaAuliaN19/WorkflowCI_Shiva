@@ -1,5 +1,4 @@
 import argparse
-import os
 import pandas as pd
 import mlflow
 import mlflow.sklearn
@@ -10,9 +9,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from mlflow.models import infer_signature
-
-mlflow.set_tracking_uri("file:./mlruns")
-mlflow.set_experiment("Sentiment Analysis Tuning")
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -55,44 +51,39 @@ grid_search = GridSearchCV(
 
 print("RUN TUNING DIMULAI")
 
-with mlflow.start_run():
+grid_search.fit(X_train, y_train)
 
-    # Training
-    grid_search.fit(X_train, y_train)
+best_model = grid_search.best_estimator_
+best_params = grid_search.best_params_
 
-    best_model = grid_search.best_estimator_
-    best_params = grid_search.best_params_
+y_pred = best_model.predict(X_test)
 
-    # Prediction
-    y_pred = best_model.predict(X_test)
+acc = accuracy_score(y_test, y_pred)
+prec = precision_score(y_test, y_pred, average="weighted")
+rec = recall_score(y_test, y_pred, average="weighted")
+f1 = f1_score(y_test, y_pred, average="weighted")
 
-    # Metrics
-    acc = accuracy_score(y_test, y_pred)
-    prec = precision_score(y_test, y_pred, average="weighted")
-    rec = recall_score(y_test, y_pred, average="weighted")
-    f1 = f1_score(y_test, y_pred, average="weighted")
+mlflow.log_param("model", "LogisticRegression")
+mlflow.log_param("vectorizer", "TF-IDF")
+mlflow.log_param("C", best_params["clf__C"])
 
-    mlflow.log_param("model", "LogisticRegression")
-    mlflow.log_param("vectorizer", "TF-IDF")
-    mlflow.log_param("C", best_params["clf__C"])
+mlflow.log_metric("accuracy", acc)
+mlflow.log_metric("precision", prec)
+mlflow.log_metric("recall", rec)
+mlflow.log_metric("f1_score", f1)
 
-    mlflow.log_metric("accuracy", acc)
-    mlflow.log_metric("precision", prec)
-    mlflow.log_metric("recall", rec)
-    mlflow.log_metric("f1_score", f1)
+signature = infer_signature(X_test, y_pred)
 
-    signature = infer_signature(X_test, y_pred)
+mlflow.sklearn.log_model(
+    sk_model=best_model,
+    artifact_path="model",
+    signature=signature
+)
 
-    mlflow.sklearn.log_model(
-        sk_model=best_model,
-        artifact_path="model",
-        signature=signature
-    )
-
-    print(f"C terbaik       : {best_params['clf__C']}")
-    print(f"Accuracy        : {acc:.4f}")
-    print(f"Precision       : {prec:.4f}")
-    print(f"Recall          : {rec:.4f}")
-    print(f"F1-score        : {f1:.4f}")
+print(f"C terbaik : {best_params['clf__C']}")
+print(f"Accuracy  : {acc:.4f}")
+print(f"Precision : {prec:.4f}")
+print(f"Recall    : {rec:.4f}")
+print(f"F1-score  : {f1:.4f}")
 
 print("PROGRAM TUNING SELESAI")
