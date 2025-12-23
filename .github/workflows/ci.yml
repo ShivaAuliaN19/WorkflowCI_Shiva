@@ -5,11 +5,9 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
 
 jobs:
-  run-model:
+  mlflow_run:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,20 +19,13 @@ jobs:
       with:
         python-version: 3.11
 
-    - name: Install Conda
-      uses: goanpeca/setup-miniconda@v2
-      with:
-        auto-update-conda: true
-        python-version: 3.11
-        activate-environment: mlflow_env
-        environment-file: MLProject/conda.yaml
-
-    - name: Install MLflow
+    - name: Install dependencies
       run: |
-        pip install mlflow
+        python -m pip install --upgrade pip
+        pip install mlflow pandas scikit-learn  
 
-    - name: Run training script directly
+    - name: Run MLflow experiment
       run: |
-        conda activate mlflow_env
-        python MLProject/modelling_tuning.py --csv_path MLProject/Hasil_Preprocessing_dan_Labelling.csv
-      shell: bash -l {0}
+        # pindah ke folder MLProject
+        cd MLProject
+        mlflow run . -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
