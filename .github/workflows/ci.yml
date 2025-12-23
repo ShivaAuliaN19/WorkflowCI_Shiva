@@ -36,6 +36,7 @@ jobs:
     - name: Run MLflow project
       run: |
         conda activate mlflow_env
-        export MLFLOW_TRACKING_URI=./MLProject/mlruns
-        mlflow run ./MLProject --experiment-name "CI_Run"
+        # hapus mlruns lama supaya tidak ada konflik experiment ID
+        rm -rf ./MLProject/mlruns
+        mlflow run ./MLProject
       shell: bash -l {0}
