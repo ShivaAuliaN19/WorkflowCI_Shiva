@@ -10,14 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout repo
       - uses: actions/checkout@v4
 
+      # 2. Build Docker image (pastikan MLflow terbaru di image)
       - name: Build Docker image
-        run: docker build -t mlflow-project MLProject
+        run: |
+          docker build -t mlflow-project MLProject
 
+      # 3. Run MLflow Project di container
       - name: Run MLflow Project
-        run: docker run --rm mlflow-project mlflow run . --backend local --no-conda -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
-
-
-
-
+        run: |
+          docker run --rm mlflow-project \
+            mlflow run . --backend local --no-conda -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
