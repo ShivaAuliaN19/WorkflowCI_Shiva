@@ -16,7 +16,11 @@ jobs:
         run: docker build --no-cache -t mlflow-project MLProject
 
       - name: Check MLflow version in Docker
-        run: docker run --rm mlflow-project --version
+        run: docker run --rm mlflow-project mlflow --version
 
       - name: Run MLflow Project
-        run: docker run --rm -v ${{ github.workspace }}:/app -w /app mlflow-project mlflow run MLProject --backend local --no-conda -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/app \
+            -w /app \
+            mlflow-project mlflow run MLProject --backend local --no-conda -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
