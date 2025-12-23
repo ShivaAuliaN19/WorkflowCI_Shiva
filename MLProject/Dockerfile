@@ -1,11 +1,18 @@
-FROM python:3.10-slim
+# Base image Miniconda
+FROM continuumio/miniconda3:latest
 
+# Set working directory
 WORKDIR /app
+
+# Copy project files
 COPY . /app
 
-RUN pip install --upgrade pip
+# Update conda & install dependencies
+RUN conda update -n base -c defaults conda -y
+RUN conda install pip -y
+
+# Install MLflow
 RUN pip install mlflow==2.9.1
-RUN pip install -r requirements.txt
 
-ENV PATH="/root/.local/bin:$PATH"
-
+# Jangan set ENTRYPOINT
+ENV PATH="/opt/conda/bin:$PATH"
