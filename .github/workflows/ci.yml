@@ -17,5 +17,6 @@ jobs:
 
 
       - name: Run MLflow Project
-        run: docker run --rm mlflow-project mlflow run .
+        run: docker run --rm mlflow-project .
+
 
