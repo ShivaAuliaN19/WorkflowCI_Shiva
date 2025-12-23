@@ -35,4 +35,6 @@ jobs:
 
     - name: Run MLflow project
       run: |
+        conda activate mlflow_env
         mlflow run MLProject -P csv_path=MLProject/Hasil_Preprocessing_dan_Labelling.csv
+      shell: bash -l {0}
