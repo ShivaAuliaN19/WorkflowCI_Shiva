@@ -3,7 +3,7 @@ FROM python:3.10-slim
 WORKDIR /app
 COPY . /app
 
-# Upgrade pip dan install MLflow versi terbaru
+# Upgrade pip dan install MLflow terbaru
 RUN pip install --upgrade pip
 RUN pip install mlflow==2.9.1
 
