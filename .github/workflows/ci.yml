@@ -2,8 +2,7 @@ name: MLflow CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
 
 jobs:
@@ -27,4 +26,7 @@ jobs:
     - name: Run MLflow experiment
       run: |
         cd MLProject
-        mlflow run . -P csv_path=Hasil_Preprocessing_dan_Labelling.csv --env-manager local
+        mlflow run . \
+          -P csv_path=Hasil_Preprocessing_dan_Labelling.csv \
+          --env-manager local \
+          --experiment-name "mlflow-ci"
