@@ -20,6 +20,6 @@ jobs:
 
       # 3. Run MLflow Project di container
       - name: Run MLflow Project
-        run: docker run --rm mlflow-project \
-          mlflow run . --backend local --no-conda -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
+        run: docker run --rm mlflow-project mlflow run . --backend local --no-conda -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
+
 
