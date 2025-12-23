@@ -1,37 +1,39 @@
-name: ML CI Pipeline (MLflow Host Runner)
+name: MLflow CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
-  train:
+  mlflow-run:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.10 
-          check-latest: false
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
 
-      - name: Create virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
+    - name: Install Conda
+      uses: goanpeca/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        python-version: 3.11
+        activate-environment: mlflow_env
+        environment-file: conda.yaml
+        update-environment: true
 
-      - name: Install dependencies
-        run: |
-          source venv/bin/activate
-          python -m pip install --upgrade pip setuptools wheel
-          pip install mlflow==2.9.1
-          pip install -r MLProject/requirements.txt
+    - name: Install MLflow
+      run: |
+        pip install mlflow
 
-      - name: Run MLflow Project
-        run: |
-          source venv/bin/activate
-          mlflow run MLProject --backend local -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
+    - name: Run MLflow project
+      run: |
+        mlflow run . -P csv_path=Hasil_Preprocessing_dan_Labelling.csv --no-conda

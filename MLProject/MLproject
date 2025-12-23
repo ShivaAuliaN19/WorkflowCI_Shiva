@@ -1,11 +1,9 @@
-name: sentiment-tuning-project
+name: MyMLProject
 
-docker_env:
-  image: python:3.10-slim
+conda_env: conda.yaml
 
 entry_points:
   main:
     parameters:
-      csv_path: path
-    command: >
-      python modelling_tuning.py --csv_path {csv_path}
+      csv_path: {type: str, default: "Hasil_Preprocessing_dan_Labelling.csv"}
+    command: "python modelling.py --csv_path {csv_path}"
