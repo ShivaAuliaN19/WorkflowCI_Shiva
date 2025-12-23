@@ -22,10 +22,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install mlflow pandas scikit-learn  
+        pip install mlflow pandas scikit-learn  # tambahkan package lain sesuai kebutuhan
 
     - name: Run MLflow experiment
       run: |
-        # pindah ke folder MLProject
         cd MLProject
-        mlflow run . -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
+        mlflow run . --no-conda -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
