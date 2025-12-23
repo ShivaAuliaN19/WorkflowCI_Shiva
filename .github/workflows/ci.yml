@@ -12,13 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build Docker image
+      - name: Build Docker image (no cache)
         run: docker build --no-cache -t mlflow-conda-project MLProject
 
       - name: Check MLflow version
         run: docker run --rm mlflow-conda-project mlflow --version
 
-      - name: Run MLflow Project
+      - name: Run MLflow Project (Conda)
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/app \

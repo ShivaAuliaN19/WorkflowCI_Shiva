@@ -7,12 +7,11 @@ WORKDIR /app
 # Copy project files
 COPY . /app
 
-# Update conda & install dependencies
+# Update conda & pip
 RUN conda update -n base -c defaults conda -y
 RUN conda install pip -y
+RUN python -m pip install --upgrade pip setuptools wheel
 
-# Install MLflow
 RUN pip install mlflow==2.9.1
 
-# Jangan set ENTRYPOINT
 ENV PATH="/opt/conda/bin:$PATH"
