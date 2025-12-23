@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t mlflow-project MLProject
+        run: docker build --no-cache -t mlflow-project MLProject
 
       - name: Run MLflow Project
-        run: docker run --rm mlflow-project mlflow run . --backend local --no-conda -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
+        run: docker run --rm mlflow-project run . --backend local --no-conda -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
