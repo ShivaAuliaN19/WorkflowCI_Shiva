@@ -36,7 +36,7 @@ jobs:
     - name: Run MLflow project
       run: |
         conda activate mlflow_env
-        # hapus mlruns lama supaya tidak ada konflik experiment ID
+        # hapus mlruns lama supaya run baru tidak konflik
         rm -rf ./MLProject/mlruns
         mlflow run ./MLProject
       shell: bash -l {0}
