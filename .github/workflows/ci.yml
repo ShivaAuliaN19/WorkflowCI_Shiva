@@ -1,4 +1,4 @@
-name: ML CI Pipeline (MLflow Host)
+name: ML CI Pipeline (MLflow Host Runner)
 
 on:
   push:
@@ -16,15 +16,22 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.11 
+          python-version: 3.10 
           check-latest: false
+
+      - name: Create virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
 
       - name: Install dependencies
         run: |
+          source venv/bin/activate
           python -m pip install --upgrade pip setuptools wheel
           pip install mlflow==2.9.1
           pip install -r MLProject/requirements.txt
 
       - name: Run MLflow Project
         run: |
+          source venv/bin/activate
           mlflow run MLProject --backend local -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
