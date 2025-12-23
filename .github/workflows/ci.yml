@@ -22,9 +22,16 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install mlflow pandas scikit-learn  # tambahkan package lain sesuai kebutuhan
+        pip install mlflow pandas scikit-learn Sastrawi nltk matplotlib joblib
 
     - name: Run MLflow experiment
       run: |
         cd MLProject
-        mlflow run . --no-conda -P csv_path=Hasil_Preprocessing_dan_Labelling.csv
+        mlflow run . -P csv_path=Hasil_Preprocessing_dan_Labelling.csv --env-manager local
+
+    - name: Upload model artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: trained-model
+        path: |
+          MLProject/mlruns/**/artifacts/model
