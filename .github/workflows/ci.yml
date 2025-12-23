@@ -36,7 +36,5 @@ jobs:
     - name: Run MLflow project
       run: |
         conda activate mlflow_env
-        # hapus mlruns lama supaya run baru tidak konflik
-        rm -rf ./MLProject/mlruns
-        mlflow run ./MLProject
+        mlflow run ./MLProject -P csv_path=Hasil_Preprocessing_dan_Labelling.csv --env-manager local
       shell: bash -l {0}
