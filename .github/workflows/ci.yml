@@ -13,8 +13,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: |
-          docker build -t mlflow-project .
+        run: docker build -t mlflow-project ./MLProject
+
 
       - name: Run MLflow Project
         run: |
