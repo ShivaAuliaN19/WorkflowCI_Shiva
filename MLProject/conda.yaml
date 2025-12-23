@@ -1,4 +1,4 @@
-name: my_ml_project_env
+name: mlflow_env
 channels:
   - defaults
 dependencies:
